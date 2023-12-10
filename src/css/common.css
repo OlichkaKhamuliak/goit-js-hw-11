@@ -1,8 +1,9 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  color: #212121;
+  line-height: 1.5;
+  font-family: Edu TAS Beginner, sans-serif;
 }
 
 img {
@@ -38,10 +39,59 @@ ol {
 }
 
 .container {
-  width: 1200px;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-left: auto;
-  margin-right: auto;
+    min-width: 320px;
+    max-width: 375px;
+  
+    margin-left: auto;
+    margin-right: auto;
+  
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  @media screen and (min-width: 768px) {
+    .container {
+      max-width: 768px;
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    .container {
+      max-width: 1170px;
+    }
+  }
+  @media screen and (min-width: 1360px) {
+    .container {
+      max-width: 1440px;
+    }
+  }
+
+  button {
+    font-size: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    padding: 5px 15px;
+    color: #fff;
+    background-color: #464646;
+  } 
+  button:active {
+  background-color: #0b6464;
+}
+@media (hover:hover) {
+  button:hover,
+  button:focus {
+    background-color: #0b6464;
+  }
 }
 
+  input {
+    font-size: 20px;
+    border: 1px solid rgba(14, 125, 125, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+  }
