@@ -96,6 +96,9 @@
   .form-container {
     background-color: darkcyan;
     padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
   .load-more {
     display: block;

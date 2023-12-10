@@ -2,6 +2,7 @@ import Notiflix from 'notiflix';
 import { getPhotos } from './pixabay-api';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+import './fixed-form'
 
 Notiflix.Notify.init({
     fontFamily: 'Edu TAS Beginner',
@@ -11,6 +12,7 @@ Notiflix.Notify.init({
 const formEl = document.querySelector('#search-form')
 const divGalleryEl = document.querySelector('.gallery')
 const moreBtnEl = document.querySelector('.js-load-more')
+const lightbox = new SimpleLightbox('.photo-card a');
 
 let page = 1;
 const perPage = 40; 
@@ -43,13 +45,20 @@ async function onSubmit(evt) {
         divGalleryEl.innerHTML=createMarkup(hits);   
         lightbox.refresh();
         Notiflix.Notify.success(`Hooray! We found ${total} images.`)
+        
+        //При новому запиті інпута, повертає на початок сторінки
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Додає плавний ефект прокрутки
+          });
+
         if (totalHits > perPage) {
             moreBtnEl.classList.remove('is-hidden')
         } else {
             moreBtnEl.classList.add('is-hidden')
             setTimeout(function() {
-                Notiflix.Notify.info("But you've reached the end of search results.");
-              }, 2000);
+                Notiflix.Notify.info("You've reached the end of search results.");
+              }, 1000);
             }
     } catch(error) {
         Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!')    
@@ -82,8 +91,9 @@ async function onclick() {
         const lastPage = Math.ceil(totalHits / perPage);
         if (lastPage === page) {
             moreBtnEl.classList.add('is-hidden')
-            Notiflix.Notify.info("We're sorry, but you've reached the end of search results.")
-        }
+            setTimeout(function() {
+                Notiflix.Notify.info("You've reached the end of search results.");
+              }, 1000);        }
     } catch(error) {
         Notiflix.Notify.failure(`Oops! ${error.message}. Try reloading the page!`)
     } finally {
@@ -112,7 +122,3 @@ function createMarkup(arr) {
     </a>
   </div>`).join('')
 }
-
-const lightbox = new SimpleLightbox('.photo-card a');
-
-
