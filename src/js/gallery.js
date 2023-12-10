@@ -31,17 +31,26 @@ async function onSubmit(evt) {
         const { data } = await getPhotos(page, query)
         const { totalHits, hits, total } = data;
         if (!searchQuery) {
+            divGalleryEl.innerHTML='';  
+            moreBtnEl.classList.add('is-hidden') 
             return Notiflix.Notify.warning('Please enter a search query.')
         }  
         if (hits.length === 0) {
+            divGalleryEl.innerHTML='';  
+            moreBtnEl.classList.add('is-hidden') 
             return Notiflix.Notify.warning('Sorry, there are no images matching your search query. Please try again.')
         }    
         divGalleryEl.innerHTML=createMarkup(hits);   
         lightbox.refresh();
-Notiflix.Notify.success(`Hooray! We found ${total} images.`)
+        Notiflix.Notify.success(`Hooray! We found ${total} images.`)
         if (totalHits > perPage) {
             moreBtnEl.classList.remove('is-hidden')
-        }
+        } else {
+            moreBtnEl.classList.add('is-hidden')
+            setTimeout(function() {
+                Notiflix.Notify.info("But you've reached the end of search results.");
+              }, 2000);
+            }
     } catch(error) {
         Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!')    
     } finally {
@@ -74,7 +83,7 @@ async function onclick() {
         if (lastPage === page) {
             moreBtnEl.classList.add('is-hidden')
             Notiflix.Notify.info("We're sorry, but you've reached the end of search results.")
-        } 
+        }
     } catch(error) {
         Notiflix.Notify.failure(`Oops! ${error.message}. Try reloading the page!`)
     } finally {
