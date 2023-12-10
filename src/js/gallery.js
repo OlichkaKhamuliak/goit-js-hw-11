@@ -3,6 +3,10 @@ import { getPhotos } from './pixabay-api';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
+Notiflix.Notify.init({
+    fontFamily: 'Edu TAS Beginner',
+    fontSize: '18px',
+})
 
 const formEl = document.querySelector('#search-form')
 const divGalleryEl = document.querySelector('.gallery')
@@ -91,3 +95,5 @@ function createMarkup(arr) {
 }
 
 const lightbox = new SimpleLightbox('.photo-card a');
+
+
