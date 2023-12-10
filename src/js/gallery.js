@@ -25,34 +25,42 @@ async function onSubmit(evt) {
     const searchQuery = evt.target.elements['searchQuery'].value.trim();
     query = searchQuery;
     try {
+        Notiflix.Loading.pulse({
+            svgColor: '#0b6464'
+        });
         const { data } = await getPhotos(page, query)
         const { totalHits, hits, total } = data;
         if (!searchQuery) {
-            return Notiflix.Notify.failure('Please enter a search query.')
+            return Notiflix.Notify.warning('Please enter a search query.')
         }  
         if (hits.length === 0) {
-            return Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')
+            return Notiflix.Notify.warning('Sorry, there are no images matching your search query. Please try again.')
         }    
-        divGalleryEl.innerHTML=createMarkup(hits);    
+        divGalleryEl.innerHTML=createMarkup(hits);   
         lightbox.refresh();
 Notiflix.Notify.success(`Hooray! We found ${total} images.`)
         if (totalHits > perPage) {
             moreBtnEl.classList.remove('is-hidden')
         }
     } catch(error) {
-    console.log(error);
+        Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!')    
+    } finally {
+        Notiflix.Loading.remove();
     }
 }
 
 async function onclick() {
     page += 1;
     try {
+        Notiflix.Loading.pulse({
+            svgColor: '#0b6464'
+        });
         const { data } = await getPhotos(page, query)
         const { totalHits, hits } = data;
         divGalleryEl.insertAdjacentHTML('beforeend', createMarkup(hits))
         lightbox.refresh();
 
-                // Плавне прокручування сторінки
+        // Плавне прокручування сторінки
         const { height: cardHeight } = document
             .querySelector(".gallery")
             .firstElementChild.getBoundingClientRect();
@@ -68,7 +76,9 @@ async function onclick() {
             Notiflix.Notify.info("We're sorry, but you've reached the end of search results.")
         } 
     } catch(error) {
-        console.log(error);
+        Notiflix.Notify.failure(`Oops! ${error.message}. Try reloading the page!`)
+    } finally {
+        Notiflix.Loading.remove();
     }
 }
 
