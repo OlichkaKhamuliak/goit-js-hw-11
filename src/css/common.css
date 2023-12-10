@@ -74,13 +74,9 @@ ol {
     padding: 5px 15px;
     color: #fff;
     background-color: #464646;
-  } 
-  button:active {
-  background-color: #0b6464;
-}
+  }
 @media (hover:hover) {
-  button:hover,
-  button:focus {
+  button:hover {
     background-color: #0b6464;
   }
 }
