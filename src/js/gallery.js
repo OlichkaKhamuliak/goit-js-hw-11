@@ -26,17 +26,17 @@ async function onSubmit(evt) {
     page = 1;
     const searchQuery = evt.target.elements['searchQuery'].value.trim();
     query = searchQuery;
+    if (!searchQuery) {
+        divGalleryEl.innerHTML='';  
+        moreBtnEl.classList.add('is-hidden') 
+        return Notiflix.Notify.warning('Please enter a search query.')
+    }  
     try {
         Notiflix.Loading.pulse({
             svgColor: '#0b6464'
         });
         const { data } = await getPhotos(page, query)
         const { totalHits, hits, total } = data;
-        if (!searchQuery) {
-            divGalleryEl.innerHTML='';  
-            moreBtnEl.classList.add('is-hidden') 
-            return Notiflix.Notify.warning('Please enter a search query.')
-        }  
         if (hits.length === 0) {
             divGalleryEl.innerHTML='';  
             moreBtnEl.classList.add('is-hidden') 
